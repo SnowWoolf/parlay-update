@@ -7,7 +7,7 @@ curl -fsSL https://raw.githubusercontent.com/SnowWoolf/parlay-update/main/instal
 ```
 curl -fsSL https://raw.githubusercontent.com/SnowWoolf/parlay-update/main/install_parlay.sh | bash
 ```
-### 3. Если это была новая установка:
+### 3. Развернуть базу данных:
    
 - Восстановить бэкап с Windows
 
