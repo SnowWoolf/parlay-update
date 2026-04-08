@@ -8,8 +8,8 @@ curl -fsSL https://raw.githubusercontent.com/SnowWoolf/parlay-update/main/instal
 curl -fsSL https://raw.githubusercontent.com/SnowWoolf/parlay-update/main/install_parlay.sh | bash
 ```
 ### 3. Развернуть базу данных:
-   
-- Восстановить бэкап с Windows
+
+#### Для новой установки - Восстановить бэкап с Windows
 
 На Windows:
 ```
@@ -19,4 +19,11 @@ curl -fsSL https://raw.githubusercontent.com/SnowWoolf/parlay-update/main/instal
 - Ограничить доступ к PostgreSQL только localhost 
 ```
 curl -fsSL https://raw.githubusercontent.com/SnowWoolf/parlay-update/main/lock_postgres_localonly.sh | bash
+```
+
+#### Если было обновление - миграции БД:
+```
+cd /opt/Parlay
+. venv/bin/activate
+python -m alembic upgrade head
 ```
