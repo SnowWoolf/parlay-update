@@ -62,8 +62,10 @@ clone_or_update_repo() {
     pkill -f 'uvicorn app.main:app' 2>/dev/null || true
 
     cd "$APP_DIR"
-    git fetch origin
+    git fetch --all --prune --tags
     git reset --hard origin/master
+    git rev-parse HEAD
+    git log --oneline -n 1
   else
     log "Клонирование репозитория"
     mkdir -p /opt
