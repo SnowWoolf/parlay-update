@@ -16,14 +16,16 @@ curl -fsSL https://raw.githubusercontent.com/SnowWoolf/parlay-update/main/instal
 "C:\Program Files\PostgreSQL\18\bin\psql.exe" -h 192.168.0.1 -U parlay -d parlay -f base.sql
 ```
 
-Ограничить доступ к PostgreSQL только localhost 
-```
-curl -fsSL https://raw.githubusercontent.com/SnowWoolf/parlay-update/main/lock_postgres_localonly.sh | bash
-```
+
 
 #### Если было обновление - миграции БД:
 ```
 cd /opt/Parlay
 . venv/bin/activate
 python -m alembic upgrade head
+```
+
+#### Ограничить доступ к PostgreSQL только localhost 
+```
+curl -fsSL https://raw.githubusercontent.com/SnowWoolf/parlay-update/main/lock_postgres_localonly.sh | bash
 ```
