@@ -5,6 +5,7 @@ APP_DIR="/opt/Parlay"
 REPO_URL="https://github.com/s-nosonov-chernomor/Parlay.git"
 SERVICE_FILE="/etc/systemd/system/parlay.service"
 PYTHON_BIN="/opt/python310/bin/python3.10"
+FALLBACK_PYTHON_BIN="/opt/python310/bin/python3.10"
 VENV_DIR="$APP_DIR/venv"
 ENV_FILE="$APP_DIR/.env"
 
@@ -52,7 +53,20 @@ install_system_packages() {
 }
 
 ensure_python() {
+  if command -v python3 >/dev/null 2>&1; then
+    local system_python
+    system_python="$(command -v python3)"
+
+    if "$system_python" -c 'import sys; raise SystemExit(0 if sys.version_info >= (3, 10) else 1)'; then
+      PYTHON_BIN="$system_python"
+      log "Использую системный Python: $PYTHON_BIN ($("$PYTHON_BIN" -V 2>&1))"
+      return
+    fi
+  fi
+
+  PYTHON_BIN="$FALLBACK_PYTHON_BIN"
   [[ -x "$PYTHON_BIN" ]] || die "Не найден Python: $PYTHON_BIN"
+  log "Системный Python ниже 3.10, использую: $PYTHON_BIN ($("$PYTHON_BIN" -V 2>&1))"
 }
 
 clone_or_update_repo() {
